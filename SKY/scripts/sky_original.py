@@ -135,8 +135,15 @@ if not os.path.exists('models'):
 
 # Write out to file
 hdu1 = pyfits.PrimaryHDU(densities * volumes)
+hdu1.header['CTYPE1'] = 'SPTYPE'
+hdu1.header['CTYPE2'] = 'RGAL'
+hdu1.header['CTYPE3'] = 'ZGAL'
+hdu1.header['CTYPE4'] = 'ANG__POS'
 hdu2 = pyfits.ImageHDU(r_w)
+hdu2.header['NAME'] = 'Galactocentric Radius'
 hdu3 = pyfits.ImageHDU(z_w)
+hdu3.header['NAME'] = 'Vertical offset from Galactic midplane'
 hdu4 = pyfits.ImageHDU(p_w)
+hdu4.header['NAME'] = 'Angular position'
 hdulist = pyfits.HDUList([hdu1, hdu2, hdu3, hdu4])
 hdulist.writeto('models/sky_model_original.fits', clobber=True)
